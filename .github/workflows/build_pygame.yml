@@ -19,5 +19,5 @@ jobs:
           python3 -m pip install pygbag
           echo "pygbag success!"
           echo "building the project"
-          python -m pygbag --build $GITHUB_WORKSPACE/py-singl-slider/main.py
+          python -m pygbag --build $GITHUB_WORKSPACE/main.py
           echo "DONE"
