@@ -21,3 +21,8 @@ jobs:
           echo "building the project"
           python -m pygbag --build $GITHUB_WORKSPACE/main.py
           echo "DONE"
+      - name: create release
+        uses: ncipollo/release-action@v1.12.0
+        with:
+          GITHUB_TOKEN: ${{ secrets.GH_CREDENTIALS }}
+          tag: ${{ github.ref_name }}
