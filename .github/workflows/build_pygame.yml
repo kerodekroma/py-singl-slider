@@ -6,22 +6,23 @@ on:
 
 jobs:
   build:
-    name: "building project"
+    name: building project
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v2
-      - run: |
-          echo "Installing pygbag"
-          python3 -m pip install pygbag
-          echo "pygbag success!"
-          echo "building the project"
-          python -m pygbag --build $GITHUB_WORKSPACE/py-singl-slider/main.py
-          echo "DONE"
+    - name: build step
+    - uses: actions/checkout@v2
+    - run: |
+         echo "Installing pygbag"
+         python3 -m pip install pygbag
+         echo "pygbag success!"
+         echo "building the project"
+         python -m pygbag --build $GITHUB_WORKSPACE/py-singl-slider/main.py
+         echo "DONE"
 
-      - name: create release
-      - uses: ncipollo/release-action@v1.12.0
-        with:
-          GITHUB_TOKEN: ${{ secrets.GH_CREDENTIALS }}
-          tag: ${{ github.ref_name }}
+    - name: create release
+    - uses: ncipollo/release-action@v1.12.0
+      with:
+        GITHUB_TOKEN: ${{ secrets.GH_CREDENTIALS }}
+        tag: ${{ github.ref_name }}
