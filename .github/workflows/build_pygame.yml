@@ -6,7 +6,8 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    name: "building project"
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
