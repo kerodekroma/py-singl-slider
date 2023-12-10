@@ -1,3 +1,4 @@
+import asyncio
 import pygame
 import py_singl_slider
 import sys
@@ -13,7 +14,7 @@ class App:
     #font
     self.font = pygame.font.Font(None, 38)
 
-  def render(self):
+  async def render(self):
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -30,6 +31,6 @@ class App:
         pygame.display.flip()
         # clock
         pygame.time.Clock().tick(60)
+        await asyncio.sleep(0)
         
-
-App().render()
+asyncio.run(App().render())
