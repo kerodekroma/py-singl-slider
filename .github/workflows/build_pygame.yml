@@ -13,3 +13,11 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3.3.0
+      - name: build
+        run: |
+          echo "Installing pygbag"
+          python3 -m pip install pygbag
+          echo "pygbag success!"
+          echo "building the project"
+          python -m pygbag --build $GITHUB_WORKSPACE/py-singl-slider/main.py
+          echo "DONE"
