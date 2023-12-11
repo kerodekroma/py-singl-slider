@@ -31,9 +31,8 @@ jobs:
           github_token: ${{ secrets.GH_CREDENTIALS }}
           tag_prefix: ""
       - name: Create Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_CREDENTIALS }}
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: ${{ steps.generate_release_tag.outputs.release_tag }}
-          release_name: Release ${{ steps.generate_release_tag.outputs.release_tag }}
+          token: ${{ secrets.GH_CREDENTIALS }}
+          tag: ${{ steps.generate_release_tag.outputs.release_tag }}
+          artifacts: "release.tar.gz,build/*.*"
