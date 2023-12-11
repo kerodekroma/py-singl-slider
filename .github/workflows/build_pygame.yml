@@ -22,10 +22,17 @@ jobs:
           python3 -m pip install pygbag
           echo "pygbag success!"
           echo "building the project"
-          python -m pygbag --build $GITHUB_WORKSPACE/main.py
+          python3 -m pygbag --build $GITHUB_WORKSPACE/main.py
           echo "DONE"
+      - name: generating version
+        run: |
+          python3 -m pip install semversioner
+          RELEASE=$(python3 -m semversioner release)
+          echo "new", $RELEASE
+      '''
       - name: create release
         uses: ncipollo/release-action@v1.12.0
         with:
           token: ${{ secrets.GH_CREDENTIALS }}
           artifacts: ${{ steps.export.outputs.archive_directory }}/build/web
+      '''
