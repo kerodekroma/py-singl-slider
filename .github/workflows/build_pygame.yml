@@ -35,4 +35,4 @@ jobs:
         with:
           token: ${{ secrets.GH_CREDENTIALS }}
           tag: ${{ steps.generate_release_tag.outputs.release_tag }}
-          artifacts: "build"
+          artifacts: "build/*.*"
