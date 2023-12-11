@@ -25,7 +25,7 @@ jobs:
           echo "building the project"
           python3 -m pygbag --build $GITHUB_WORKSPACE/main.py
           echo "DONE"
-          zip -r web_release.zip build/web
+          zip -r web_release.zip build/web/*.*
 
       - name: Generate release tag
         id: generate_release_tag
