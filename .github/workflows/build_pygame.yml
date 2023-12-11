@@ -24,8 +24,16 @@ jobs:
           echo "building the project"
           python3 -m pygbag --build $GITHUB_WORKSPACE/main.py
           echo "DONE"
-      - name: generating version
-        run: |
-          python3 -m pip install semversioner
-          python3 -m semversioner add-change --type patch --description "Updating source code"
-          python3 -m semversioner release
+      - name: Generate release tag
+        id: generate_release_tag
+        uses: alexvingg/next-release-tag@v1.0.3
+        with:
+          github_token: ${{ secrets.GH_CREDENTIALS }}
+          tag_prefix: ""
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_CREDENTIALS }}
+        with:
+          tag_name: ${{ steps.generate_release_tag.outputs.release_tag }}
+          release_name: Release ${{ steps.generate_release_tag.outputs.release_tag }}
