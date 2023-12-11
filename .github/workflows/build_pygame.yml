@@ -27,5 +27,6 @@ jobs:
       - name: generating version
         run: |
           python3 -m pip install semversioner
+          python3 -m semversioner add-change --type patch --description "Updating source code"
           RELEASE=$(python3 -m semversioner release)
           echo "new", $RELEASE
