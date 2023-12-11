@@ -25,7 +25,7 @@ jobs:
           echo "building the project"
           python3 -m pygbag --build $GITHUB_WORKSPACE/main.py
           echo "DONE"
-          zip -j -r web_release.zip build/web
+          zip -j -r pysinglslider_demo.zip build/web
 
       - name: Generate release tag
         id: generate_release_tag
@@ -39,4 +39,4 @@ jobs:
         with:
           token: ${{ secrets.GH_CREDENTIALS }}
           tag: ${{ steps.generate_release_tag.outputs.release_tag }}
-          artifacts: web_release.zip
+          artifacts: pysinglslider_demo.zip
