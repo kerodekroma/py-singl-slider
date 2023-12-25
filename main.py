@@ -10,7 +10,8 @@ class App:
     pygame.init()
     self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Demo of PySinglSlider")
-    self.slider = py_singl_slider.PySingleSlider(20, 30, 10, 150)
+    self.slider = py_singl_slider.PySingleSlider(20, 20)
+
     #font
     self.font = pygame.font.Font(None, 38)
 
@@ -23,9 +24,10 @@ class App:
                 break
             self.slider.listen_event(event)
 
-        self.screen.fill((120, 120, 120))
+        self.screen.fill((10, 220, 10))
         text = self.font.render("{0:.2f}".format( self.slider.value ), True, (10, 10, 200))
-        self.screen.blit(text, (self.slider.bar_width + 32, self.slider.bar_y - 9))
+        slider_rect = self.slider.get_rect()
+        self.screen.blit(text, (slider_rect.width + 32, slider_rect.y - 9))
         self.slider.render(self.screen)
         #update the display
         pygame.display.flip()
