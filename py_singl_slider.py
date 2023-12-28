@@ -64,15 +64,16 @@ class PySingleSlider:
         self.bg_right_corner.set_colorkey((0, 0, 0))
         
     def listen_event(self, event):
+        mouse_pos = pygame.mouse.get_pos()
         if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.FINGERDOWN:
-            if self.bar_rect.collidepoint(event.pos) or self.handler_rect.collidepoint(event.pos):
+            if self.bar_rect.collidepoint(mouse_pos) or self.handler_rect.collidepoint(mouse_pos):
                 self.is_handler_down = True
 
         if event.type == pygame.MOUSEBUTTONUP or event.type == pygame.FINGERUP:
             self.is_handler_down = False
 
         if (event.type == pygame.MOUSEMOTION or event.type == pygame.FINGERMOTION) and self.is_handler_down:
-            pos_x = (event.pos[0] - self.bar_x)
+            pos_x = (mouse_pos[0] - self.bar_x)
             self.handler_rect.x = min((self.bar_width + self.bar_x), max(pos_x, self.bar_x))
             self.value = self.get_current_value()
     
