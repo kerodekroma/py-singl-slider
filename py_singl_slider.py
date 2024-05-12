@@ -72,6 +72,11 @@ class PySingleSlider:
         if event.type == pygame.MOUSEBUTTONUP or event.type == pygame.FINGERUP:
             self.is_handler_down = False
 
+        if self.is_handler_down:
+            pos_x = mouse_pos[0]
+            self.handler_rect.x = min((self.bar_width + self.bar_x), max(pos_x, self.bar_x))
+            self.value = self.get_current_value()
+
         if (event.type == pygame.MOUSEMOTION or event.type == pygame.FINGERMOTION) and self.is_handler_down:
             pos_x = (mouse_pos[0] - self.bar_x)
             self.handler_rect.x = min((self.bar_width + self.bar_x), max(pos_x, self.bar_x))
