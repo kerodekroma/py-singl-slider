@@ -1,0 +1,2 @@
+# Include all files in the assets directory
+recursive-include py_singl_slider/theme *
