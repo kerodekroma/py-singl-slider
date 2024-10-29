@@ -1,7 +1,15 @@
 import pygame
+import os
+
+def load_image(image_name, theme_name, theme_folder_path=None):
+    """Helper function to load an image from the assets directory."""
+    image_path = os.path.join(os.path.dirname(__file__), f'theme/{theme_name}', image_name)
+    if theme_folder_path != None:
+        image_path = f'{theme_folder_path}/{theme_name}/{image_name}'
+    return pygame.image.load(image_path).convert_alpha()
 
 class PySinglSlider:
-    def __init__(self, x=0, y=0, min_value=0, max_value=150, initial_value=0, theme_name= 'one', theme_path='assets/theme'):
+    def __init__(self, x=0, y=0, min_value=0, max_value=150, initial_value=0, theme_name= 'one', theme_path=None):
         self.scale = 2
         self.initial_value = initial_value
         self.min_value = min_value
@@ -20,10 +28,9 @@ class PySinglSlider:
     def get_rect(self):
         return pygame.Rect(self.bar_x, self.bar_y, self.bg_bar_center.get_rect().width, self.bg_bar_center.get_rect().height)
 
-    def setup_assets(self, theme_folder_path, theme_name='one'):
-        theme_path = f'{theme_folder_path}/{theme_name}'
+    def setup_assets(self, theme_folder_path=None, theme_name='one'):
         # handler
-        img_handler = pygame.image.load(f'{theme_path}/handler.png').convert_alpha()
+        img_handler = load_image('handler.png', theme_name, theme_folder_path)
         self.bg_handler = pygame.Surface((img_handler.get_width() * self.scale, img_handler.get_height() * self.scale))
 
         # handler rect
@@ -37,7 +44,7 @@ class PySinglSlider:
 
         # bar center background
         self.bar_width = self.max_value * self.scale
-        img_bar_center = pygame.image.load(f'{theme_path}/bar_center.png').convert_alpha()
+        img_bar_center = load_image('bar_center.png', theme_name, theme_folder_path)
         self.bg_bar_center = pygame.Surface((self.bar_width + self.handler_rect.width, img_bar_center.get_height() * self.scale)).convert_alpha()
         self.bar_height = img_bar_center.get_height() * self.scale
 
@@ -53,7 +60,7 @@ class PySinglSlider:
 
         # bar corners
         # LEFT
-        img_bar_corner = pygame.image.load(f'{theme_path}/bar_corner.png').convert_alpha()
+        img_bar_corner = load_image('bar_corner.png', theme_name, theme_folder_path)
         self.bg_bar_corner = pygame.Surface((img_bar_corner.get_width() * self.scale, img_bar_corner.get_height() * self.scale)).convert_alpha()
         scaled = pygame.transform.scale(img_bar_corner, (img_bar_corner.get_width() * self.scale, img_bar_corner.get_height() * self.scale))
         self.bg_bar_corner.blit(scaled, (0, 0))
