@@ -1,7 +1,7 @@
 import pygame
 
-class PySingleSlider:
-    def __init__(self, x=0, y=0, min_value=0, max_value=150, initial_value=0, theme_name= 'one'):
+class PySinglSlider:
+    def __init__(self, x=0, y=0, min_value=0, max_value=150, initial_value=0, theme_name= 'one', theme_path='assets/theme'):
         self.scale = 2
         self.initial_value = initial_value
         self.min_value = min_value
@@ -14,14 +14,14 @@ class PySingleSlider:
         #handler setup
         self.handler_active_bg_color = (80, 100, 100)
         self.is_handler_down = False
-        self.setup_assets(theme_name)
+        self.setup_assets(theme_path, theme_name)
         self.value = self.get_current_value()
 
     def get_rect(self):
         return pygame.Rect(self.bar_x, self.bar_y, self.bg_bar_center.get_rect().width, self.bg_bar_center.get_rect().height)
 
-    def setup_assets(self, theme_name='one'):
-        theme_path = f'assets/theme/{theme_name}'
+    def setup_assets(self, theme_folder_path, theme_name='one'):
+        theme_path = f'{theme_folder_path}/{theme_name}'
         # handler
         img_handler = pygame.image.load(f'{theme_path}/handler.png').convert_alpha()
         self.bg_handler = pygame.Surface((img_handler.get_width() * self.scale, img_handler.get_height() * self.scale))
@@ -97,5 +97,3 @@ class PySingleSlider:
         screen.blit(self.bg_right_corner, ( self.bar_x + self.bar_rect.width, self.bar_y ))
         #handler
         screen.blit(self.bg_handler, (self.handler_rect.x, self.bar_y - ( self.handler_rect.height - self.bar_rect.height )//2))
-        # handle_color = self.handler_active_bg_color if self.is_handler_down else self.handler_bg_color
-        #pygame.draw.rect(screen, handle_color, self.handler_rect)

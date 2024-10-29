@@ -1,4 +1,4 @@
-name: Build this project using Pygbag
+name: Build the project using Pygbag
 on:
   push:
     branches:
@@ -27,16 +27,79 @@ jobs:
           echo "DONE"
           zip -j -r pysinglslider_demo.zip build/web
 
-      - name: Generate release tag
-        id: generate_release_tag
-        uses: alexvingg/next-release-tag@v1.0.4
+      - name: Generate Git Tag
+        id: generate_tag
+        run: |
+          set -ex  # Exit on error (-e) and print each command (-x)
+
+          echo "Starting tag generation..."
+
+          VERSION_PREFIX="v"
+          VERSION_MAJOR_MINOR="1.0"
+
+          echo "START => Fetching all tags from the remote repository..."
+          git fetch --tags
+          echo "END => Fetching all tags from the remote repository..."
+          if [ $? -ne 0 ]; then
+            echo "Error: Failed to fetch tags"
+            exit 1
+          fi
+
+          echo "Finding the latest patch version for ${VERSION_MAJOR_MINOR}..."
+          VERSION_PATCH=$(git tag --list "${VERSION_PREFIX}${VERSION_MAJOR_MINOR}.*" --sort=-version:refname | head -n 1 | grep -oE '[0-9]+$')
+          
+          if [ $? -ne 0 ]; then
+            echo "Warning: Failed to retrieve the latest patch version. Setting patch version to 0."
+            VERSION_PATCH=0
+          fi
+
+          echo "Current patch version: $VERSION_PATCH"
+
+          # Increment the patch version or start at 0 if none exists
+          if [ -z "$VERSION_PATCH" ]; then
+            VERSION_PATCH=0
+          else
+            VERSION_PATCH=$((VERSION_PATCH + 1))
+          fi
+
+          echo "New patch version: $VERSION_PATCH"
+
+          PYPI_TAG="${VERSION_MAJOR_MINOR}.${VERSION_PATCH}"
+          NEW_TAG="${VERSION_PREFIX}${PYPI_TAG}"
+
+          echo "Generated new tag: $NEW_TAG"
+          echo "Generated new PYPI tag: $PYPI_TAG"
+
+          # Set environment variables for use in later steps
+          echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
+          echo "PYPI_TAG=$PYPI_TAG" >> $GITHUB_ENV
+
+          # Check if the environment variables are set correctly
+          echo "Environment variable NEW_TAG: ${NEW_TAG}"
+          echo "Environment variable PYPI_TAG: ${PYPI_TAG}"
+
+          # Replace VERSION_PLACEHOLDER in setup.py with the new version
+          echo "Updating setup.py with the new version..."
+          sed -i "s/{{VERSION_PLACEHOLDER}}/${PYPI_TAG}/g" setup.py
+          
+          if [ $? -ne 0 ]; then
+            echo "Error: Failed to update setup.py"
+            exit 1
+          fi
+
+          echo "Tag generation completed successfully."
+
+      - name: Build package
+        run: python3 setup.py sdist bdist_wheel
+
+      - name: Publish distribution 📦 to PyPI
+        uses: pypa/gh-action-pypi-publish@master
         with:
-          github_token: ${{ secrets.GH_CREDENTIALS }}
-          tag_prefix: ""
+          password: ${{ secrets.PYPI_API_TOKEN }}
 
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
           token: ${{ secrets.GH_CREDENTIALS }}
-          tag: ${{ steps.generate_release_tag.outputs.release_tag }}
+          tag: ${{ env.NEW_TAG }}
           artifacts: pysinglslider_demo.zip

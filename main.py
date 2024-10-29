@@ -10,9 +10,9 @@ class App:
     pygame.init()
     self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Demo of PySinglSlider")
-    self.slider = py_singl_slider.PySingleSlider(20, 20, 0, 100, 10)
-    self.slider_init_value = py_singl_slider.PySingleSlider(20, 70, 0, 200, 15)
-    self.slider_two = py_singl_slider.PySingleSlider(20, 120, 0, 150, 10, 'two')
+    self.slider = py_singl_slider.PySinglSlider(20, 20, 0, 100, 10)
+    self.slider_init_value = py_singl_slider.PySinglSlider(20, 70, 0, 200, 15)
+    self.slider_two = py_singl_slider.PySinglSlider(20, 120, 0, 150, 10, 'two')
     #font
     self.font = pygame.font.Font('assets/font/PixelSimpel.otf', 32)
 

@@ -19,7 +19,7 @@ jobs:
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
           CHANNEL: HTML
-          ITCH_GAME: py-single-slider
+          ITCH_GAME: py-singl-slider
           ITCH_USER: kerodekroma
           PACKAGE: pysinglslider_demo.zip
           VERSION: ${{ steps.download-html.outputs.version }}
