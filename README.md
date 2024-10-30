@@ -1,7 +1,7 @@
 
 # PySinglSlider
 
-[![PyPI version](https://badge.fury.io/py/py-singl-slider.svg?version=latest)](https://badge.fury.io/py/py-single-slider)
+[![PyPI version](https://badge.fury.io/py/py-singl-slider.svg?version=latest)](https://badge.fury.io/py/py-singl-slider)
 
 `PySinglSlider` is a customizable, simple single slider widget built with Pygame. Designed for quick setup and theming, it lets you add an interactive slider for Pygame applications that need fine-grained control over a value range.
 
@@ -14,7 +14,7 @@
 
 ## Installation
 
-Install `PySinglSlider` via [PyPI](https://pypi.org/project/PySinglSlider):
+Install `PySinglSlider` via [PyPI](https://pypi.org/project/py-singl-slider):
 
 ```bash
 pip install py_singl_slider
@@ -26,7 +26,7 @@ pip install py_singl_slider
 
 To integrate `PySinglSlider` into your Pygame project, follow these steps:
 
-1.  Import `PySinglSlider` in your Pygame script.
+1.  Import `PySinglSlider` from `py_singl_slider` in your Pygame script. (see example down below)
 2.  Initialize the slider with optional parameters such as position, value range, initial value, and theme settings.
 3.  Handle events and render the slider in your game loop.
 
