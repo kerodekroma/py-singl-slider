@@ -17,7 +17,7 @@
 Install `PySinglSlider` via [PyPI](https://pypi.org/project/PySinglSlider):
 
 ```bash
-pip install PySinglSlider
+pip install py_singl_slider
 ```
 
 ## Getting Started
@@ -36,7 +36,7 @@ Here's a basic example to get started:
 
 ```bash
 import pygame
-from PySinglSlider import PySinglSlider
+import py_singl_slider
 
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
@@ -44,7 +44,7 @@ clock = pygame.time.Clock()
 
 # Create slider
 
-slider = PySinglSlider(x=100, y=250, min_value=0, max_value=100, initial_value=50, theme_name='default_theme')
+slider = py_singl_slider.PySinglSlider(x=100, y=250, min_value=0, max_value=100, initial_value=50)
 
 running = True
 while running:
