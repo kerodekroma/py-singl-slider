@@ -9,7 +9,35 @@ def load_image(image_name, theme_name, theme_folder_path=None):
     return pygame.image.load(image_path).convert_alpha()
 
 class PySinglSlider:
+    """
+    A customizable single slider component in Pygame.
+
+    Attributes:
+        scale (int): Scaling factor for assets.
+        initial_value (int): Initial slider value.
+        min_value (int): Minimum slider value.
+        max_value (int): Maximum slider value.
+        bar_x (int): X position of the bar.
+        bar_y (int): Y position of the bar.
+        bar_width (int): Width of the bar.
+        bar_height (int): Height of the bar.
+        handler_active_bg_color (tuple): Color when handler is active.
+        is_handler_down (bool): Indicates if the handler is currently being dragged.
+        value (int): Current value of the slider.
+    """
     def __init__(self, x=0, y=0, min_value=0, max_value=150, initial_value=0, theme_name= 'one', theme_path=None):
+        """
+        Initialize the PySinglSlider with position, range, and theme.
+
+        Args:
+            x (int): X position of the slider bar.
+            y (int): Y position of the slider bar.
+            min_value (int): Minimum value of the slider.
+            max_value (int): Maximum value of the slider.
+            initial_value (int): Initial value of the slider.
+            theme_name (str): Theme to be applied for the slider's assets.
+            theme_path (str, optional): Custom theme directory path.
+        """
         self.scale = 2
         self.initial_value = initial_value
         self.min_value = min_value
@@ -26,9 +54,22 @@ class PySinglSlider:
         self.value = self.get_current_value()
 
     def get_rect(self):
+        """
+        Get the slider's bounding rectangle.
+
+        Returns:
+            pygame.Rect: Rectangle representing the slider's bounding box.
+        """
         return pygame.Rect(self.bar_x, self.bar_y, self.bg_bar_center.get_rect().width, self.bg_bar_center.get_rect().height)
 
     def setup_assets(self, theme_folder_path=None, theme_name='one'):
+        """
+        Load and set up the slider's assets based on the theme.
+
+        Args:
+            theme_folder_path (str, optional): Path to the theme folder.
+            theme_name (str): Name of the theme to use.
+        """
         # handler
         img_handler = load_image('handler.png', theme_name, theme_folder_path)
         self.bg_handler = pygame.Surface((img_handler.get_width() * self.scale, img_handler.get_height() * self.scale))
@@ -71,6 +112,12 @@ class PySinglSlider:
         self.bg_right_corner.set_colorkey((0, 0, 0))
         
     def listen_event(self, event):
+        """
+        Handle user input to control the slider.
+
+        Args:
+            event (pygame.event.Event): The event to handle, such as mouse or finger events.
+        """
         mouse_pos = pygame.mouse.get_pos()
         if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.FINGERDOWN:
             if self.bar_rect.collidepoint(mouse_pos) or self.handler_rect.collidepoint(mouse_pos):
